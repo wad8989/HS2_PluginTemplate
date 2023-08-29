@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ProjectName>HS2_PluginTemplate</ProjectName>
+    <GameName>HoneySelect2</GameName>
+    <Description>Plugin Description...</Description>
+    <Version>0.0.1</Version>
+    <Company>wad8989</Company>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+    <AssemblyName>$(ProjectName)</AssemblyName>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <RestoreAdditionalProjectSources>
+      https://api.nuget.org/v3/index.json;
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.samboy.dev/v3/index.json
+    </RestoreAdditionalProjectSources>
+    <RootNamespace>$(ProjectName)</RootNamespace>
+  </PropertyGroup>
+
+  <Target Name="ApplyToGame" AfterTargets="Build" Condition=" $(ApplyToGame) == 'True' ">
+      <Copy
+      SourceFiles="$(TargetDir)$(ProjectName).dll"
+      DestinationFolder="..\$(GameName)\BepInEx\plugins" />
+      <Message Text="Applied to Game." Importance="High" />
+      <Message Text="$(TargetDir)$(ProjectName).dll -> ..\$(GameName)\BepInEx\plugins" Importance="High" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.Core" Version="5.*" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+    <PackageReference Include="UnityEngine.Modules" Version="2018.4.11" IncludeAssets="compile" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+  </ItemGroup>
+</Project>
