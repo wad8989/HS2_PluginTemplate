@@ -24,7 +24,7 @@
   <Target Name="ApplyToGame" AfterTargets="Build" Condition=" $(ApplyToGame) == 'True' ">
       <Copy
       SourceFiles="$(TargetDir)$(ProjectName).dll"
-      DestinationFolder="..\$(GameName)\BepInEx\plugins" />
+      DestinationFolder="$(ProjectDir)..\$(GameName)\BepInEx\plugins" />
       <Message Text="Applied to Game." Importance="High" />
       <Message Text="$(TargetDir)$(ProjectName).dll -> ..\$(GameName)\BepInEx\plugins" Importance="High" />
   </Target>
@@ -38,5 +38,10 @@
   
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(ProjectDir)..\$(GameName)\HoneySelect2_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
